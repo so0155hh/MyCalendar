@@ -1,24 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ElP-c6-hri">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Data Source-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyCalendar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-zB-VBN" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="firstWeekday">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="headerHeight">
+                                        <real key="value" value="-1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="subtitleTextSize">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="headerTitleTextSize">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="weekdayTextSize">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="weekdayHeight">
+                                        <real key="value" value="-1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="titleTextSize">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rowHeight">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
+                                        <color key="value" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Wf0-LN-9eV"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="MRb-ix-YNb"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="MmW-zB-VBN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="BbY-v9-i2M"/>
+                            <constraint firstItem="MmW-zB-VBN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CPG-vE-1OB"/>
+                            <constraint firstItem="MmW-zB-VBN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="FUm-Jg-QsZ"/>
+                            <constraint firstItem="MmW-zB-VBN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fUk-Vz-NWU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Im1-G3-1Uy">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3DD-ed-5F6">
+                            <connections>
+                                <segue destination="FUN-44-VR6" kind="presentation" id="btV-X6-RIH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="calendar" destination="MmW-zB-VBN" id="FZY-u7-Eg4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1046.25" y="115"/>
+        </scene>
+        <!--Add View Controller-->
+        <scene sceneID="bCS-Hn-WmX">
+            <objects>
+                <viewController id="wzc-FR-F8P" customClass="AddViewController" customModule="MyCalendar" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JCF-aY-qzv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lx-zZ-E3o">
+                                <rect key="frame" x="60" y="96" width="200" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="何km走った？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IX-x3-fky">
+                                <rect key="frame" x="25" y="176.5" width="110" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cda-0v-c9K">
+                                <rect key="frame" x="190" y="163.5" width="100" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Bpn-lr-bjn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="8IX-x3-fky" firstAttribute="top" secondItem="1lx-zZ-E3o" secondAttribute="bottom" constant="60" id="I5h-UB-9HS"/>
+                            <constraint firstItem="1lx-zZ-E3o" firstAttribute="leading" secondItem="iFp-4L-ALR" secondAttribute="leading" constant="60" id="Uin-SH-0fT"/>
+                            <constraint firstItem="8IX-x3-fky" firstAttribute="centerX" secondItem="JCF-aY-qzv" secondAttribute="centerX" constant="-80" id="YH6-Y1-ugf"/>
+                            <constraint firstItem="1lx-zZ-E3o" firstAttribute="top" secondItem="iFp-4L-ALR" secondAttribute="top" constant="40" id="YN1-nT-r1b"/>
+                            <constraint firstItem="cda-0v-c9K" firstAttribute="centerX" secondItem="JCF-aY-qzv" secondAttribute="centerX" constant="80" id="ezF-C8-7Kw"/>
+                            <constraint firstItem="cda-0v-c9K" firstAttribute="bottom" secondItem="8IX-x3-fky" secondAttribute="bottom" id="fSb-bh-zrB"/>
+                            <constraint firstItem="iFp-4L-ALR" firstAttribute="trailing" secondItem="1lx-zZ-E3o" secondAttribute="trailing" constant="60" id="fv6-Zk-6XC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iFp-4L-ALR"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3kj-zk-6vP">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="RSB-ti-z8h">
+                            <connections>
+                                <action selector="cancelBtn:" destination="wzc-FR-F8P" id="iLc-4U-7Mt"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="SE0-QX-SSD">
+                            <connections>
+                                <action selector="saveBtn:" destination="wzc-FR-F8P" id="Dqo-8T-GdP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="runRecordText" destination="cda-0v-c9K" id="xhE-Of-Ppy"/>
+                        <outlet property="todayLabel" destination="1lx-zZ-E3o" id="DVo-6Y-ldQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a0T-9f-1HY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2880" y="115"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ccx-s1-Z3a">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ElP-c6-hri" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="f3j-oq-zck">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Y0h-mT-pr2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w1d-6Q-FLh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="115.84821428571428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Gl-XN-ytz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FUN-44-VR6" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ptC-gS-VQ6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wzc-FR-F8P" kind="relationship" relationship="rootViewController" id="l5a-4F-3Ph"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sRY-W1-jIC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1882.5" y="115"/>
         </scene>
     </scenes>
 </document>

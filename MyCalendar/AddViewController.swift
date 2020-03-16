@@ -7,24 +7,40 @@
 //
 
 import UIKit
+import RealmSwift
+
+let realm = try! Realm()
+let date = Date()
 
 class AddViewController: UIViewController {
-
+    
+    @IBOutlet weak var todayLabel: UILabel!
+    @IBOutlet weak var runRecordText: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .short
+        formatter.locale = Locale(identifier: "ja_JP")
+        todayLabel.text = formatter.string(from: date)
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func saveBtn(_ sender: Any) {
+      
+        try! realm.write {
+            let Records = [RunRecord(value: ["date": todayLabel.text, "distance": runRecordText.text])]
+            realm.add(Records)
+        }
+         self.dismiss(animated: true, completion: nil)
+        print("データ書き込み中")
     }
-    */
+    
+    @IBAction func cancelBtn(_ sender: Any) {
+    
+        self.dismiss(animated: true, completion: nil)
+    }
 
 }
