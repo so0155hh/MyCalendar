@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-zB-VBN" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="44" width="320" height="436"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="365"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="firstWeekday">
                                         <integer key="value" value="1"/>
@@ -48,19 +48,41 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
                                         <color key="value" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="headerDateFormat" value="YYYY/MM"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="headerMinimumDissolvedAlpha">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="Wf0-LN-9eV"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="MRb-ix-YNb"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="月間走行距離" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTU-Ye-YB4">
+                                <rect key="frame" x="20" y="439" width="120" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkP-qj-iCD">
+                                <rect key="frame" x="200" y="439" width="80" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="MmW-zB-VBN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="BbY-v9-i2M"/>
                             <constraint firstItem="MmW-zB-VBN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CPG-vE-1OB"/>
                             <constraint firstItem="MmW-zB-VBN" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="FUm-Jg-QsZ"/>
+                            <constraint firstItem="NTU-Ye-YB4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-80" id="Hts-H7-mYC"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NTU-Ye-YB4" secondAttribute="bottom" constant="20" id="LJ5-Cr-TcY"/>
+                            <constraint firstItem="mkP-qj-iCD" firstAttribute="leading" relation="lessThanOrEqual" secondItem="NTU-Ye-YB4" secondAttribute="trailing" constant="60" id="VsH-d1-Mla"/>
+                            <constraint firstItem="mkP-qj-iCD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="80" id="a1g-hc-H97"/>
+                            <constraint firstItem="mkP-qj-iCD" firstAttribute="bottom" secondItem="NTU-Ye-YB4" secondAttribute="bottom" id="apu-dF-gpg"/>
                             <constraint firstItem="MmW-zB-VBN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fUk-Vz-NWU"/>
+                            <constraint firstItem="NTU-Ye-YB4" firstAttribute="top" secondItem="MmW-zB-VBN" secondAttribute="bottom" constant="30" id="ps9-7D-980"/>
+                            <constraint firstItem="NTU-Ye-YB4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="t7n-9D-1wr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -73,6 +95,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="calendar" destination="MmW-zB-VBN" id="FZY-u7-Eg4"/>
+                        <outlet property="monthTotalText" destination="mkP-qj-iCD" id="RPe-3k-Pyq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

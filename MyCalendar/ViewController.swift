@@ -14,21 +14,28 @@ import RealmSwift
 class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppearance {
     
     var notificationToken: NotificationToken? = nil
+    let tmpDate = Calendar(identifier: .gregorian)
     
     @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var monthTotalText: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.calendar.dataSource = self
         self.calendar.delegate = self
+        //今日の印(赤丸)を消す
+       // calendar.today = nil
+        
         let realm = try! Realm()
         // Do any additional setup after loading the view.
         notificationToken = realm.observe { Notification, realm in
+           
             self.calendar.reloadData()
         }
     }
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
+        var myRecord = ""
         let tmpDate = Calendar(identifier: .gregorian)
         let year = tmpDate.component(.year, from: date)
         let month = tmpDate.component(.month, from: date)
@@ -40,16 +47,39 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         let realm = try! Realm()
         var result = realm.objects(RunRecord.self)
         result = result.filter("date = '\(da)'")
-        for record in result {
-            if record.date == da {
-                return record.distance + "km"
-            }
+//        for record in result {
+//            if record.date == da {
+//                return record.distance + "km"
+//            }
+//        }
+        if let record = result.last {
+            myRecord = record.distance
+            return myRecord + "km"
         }
         return "○"
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        let tmpDate = Calendar(identifier: .gregorian)
+        let year = tmpDate.component(.year, from: date)
+        let month = tmpDate.component(.month, from: date)
+    //    let day = tmpDate.component(.day, from: date)
+        let m = String(format: "%02d", month)
+        let my = "\(year)/\(m)"
+        let realm = try! Realm()
+      
+      //  let monthTotal = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(my)'")
+        
+        let monthTotal: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(my)'").sum(ofProperty: "distance")
+     //  monthTotalText.text = monthTotal.last?.distance
+      //  monthTotalText.text = String(monthTotal.last!.distance) + "km"
+        monthTotalText.text = String(monthTotal)
+      //  monthTotalText.text = String(monthTotal)
+            
+        }
 }
 class RunRecord: Object {
     @objc dynamic var date: String = ""
+    @objc dynamic var yearAndMonth = ""
     @objc dynamic var distance: String = ""
 }
