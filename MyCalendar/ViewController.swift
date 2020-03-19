@@ -43,7 +43,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         let m = String(format: "%02d", month)
         let d = String(format: "%02d", day)
         let da = "\(year)/\(m)/\(d)"
-        
+        //年月日が一致したらサブタイトルに走った距離を表示
         let realm = try! Realm()
         var result = realm.objects(RunRecord.self)
         result = result.filter("date = '\(da)'")
@@ -59,23 +59,19 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         return "○"
     }
     override func viewDidAppear(_ animated: Bool) {
-        
+        //走った距離の合計を算出する
         let tmpDate = Calendar(identifier: .gregorian)
         let year = tmpDate.component(.year, from: date)
         let month = tmpDate.component(.month, from: date)
-    //    let day = tmpDate.component(.day, from: date)
         let m = String(format: "%02d", month)
         let my = "\(year)/\(m)"
         let realm = try! Realm()
-      
-      //  let monthTotal = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(my)'")
         
         let monthTotal: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(my)'").sum(ofProperty: "distance")
+        monthTotalText.text = String(monthTotal)
+        //let monthTotal: Int = realm.objects(RunRecord.self).sum(ofProperty: "distance")
      //  monthTotalText.text = monthTotal.last?.distance
       //  monthTotalText.text = String(monthTotal.last!.distance) + "km"
-        monthTotalText.text = String(monthTotal)
-      //  monthTotalText.text = String(monthTotal)
-            
         }
 }
 class RunRecord: Object {
