@@ -53,7 +53,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
 //            }
 //        }
         if let record = result.last {
-            myRecord = record.distance
+            myRecord = String(record.distance)
             return myRecord + "km"
         }
         return "○"
@@ -68,14 +68,20 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         let realm = try! Realm()
         
         let monthTotal: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(my)'").sum(ofProperty: "distance")
-        monthTotalText.text = String(monthTotal)
+       
+        monthTotalText.text = String(monthTotal) + "km"
         //let monthTotal: Int = realm.objects(RunRecord.self).sum(ofProperty: "distance")
      //  monthTotalText.text = monthTotal.last?.distance
       //  monthTotalText.text = String(monthTotal.last!.distance) + "km"
         }
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        if monthPosition == .previous || monthPosition == .next {
+            calendar.setCurrentPage(date, animated: true)
+        }
+    }
 }
 class RunRecord: Object {
     @objc dynamic var date: String = ""
     @objc dynamic var yearAndMonth = ""
-    @objc dynamic var distance: String = ""
+    @objc dynamic var distance: Int = 0
 }

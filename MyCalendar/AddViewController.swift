@@ -14,6 +14,7 @@ let date = Date()
 
 class AddViewController: UIViewController {
     
+    
     @IBOutlet weak var todayLabel: UILabel!
     @IBOutlet weak var runRecordText: UITextField!
     let formatter2 = DateFormatter()
@@ -27,11 +28,10 @@ class AddViewController: UIViewController {
         formatter.locale = Locale(identifier: "ja_JP")
         todayLabel.text = formatter.string(from: date)
     
-       // print(formatter2.string(from: date))
     }
     
     @IBAction func saveBtn(_ sender: Any) {
-        
+        let intDistance = Int(runRecordText.text!)
 //    let myRecord = RunRecord()
 //           formatter2.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy/MM", options: 0, locale: Locale(identifier: "en_US_POSIX"))
 //         myRecord.yearAndMonth = formatter2.string(from: date)
@@ -39,7 +39,7 @@ class AddViewController: UIViewController {
        // monthRecord.sum(ofProperty: "distance")
         try! realm.write {
             
-            let Records = [RunRecord(value: ["date": todayLabel.text, "distance": runRecordText.text])]
+            let Records = [RunRecord(value: ["date": todayLabel.text!, "distance": intDistance!])]
             realm.add(Records)
         }
          self.dismiss(animated: true, completion: nil)
