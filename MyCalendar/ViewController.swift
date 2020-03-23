@@ -58,7 +58,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         }
         return "○"
     }
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         //走った距離の合計を算出する
         let tmpDate = Calendar(identifier: .gregorian)
         let year = tmpDate.component(.year, from: date)
