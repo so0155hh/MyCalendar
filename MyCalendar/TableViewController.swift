@@ -7,22 +7,43 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var myTableView: UITableView!
     let date = Date()
+    let dateFormatter = DateFormatter()
   //  let tmpDate = Calendar(identifier: .gregorian)
     
         let sections = ["2020年", "2021年", "2022年"]
     //let sections =
-    let items = //[
-    ["1月", "2月", "3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
-//        ,
-//        ["Red","Black"],
-//        ["Circle", "Oval"]
-//    ]
+    let items = ["1月", "2月", "3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
+    var openedSections = Set<Int>()
     
+    //sectionをタップした時の処理
+    @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
+        if let section = sender.view?.tag {
+            if openedSections.contains(section) {
+                //sectionを閉じる処理
+                openedSections.remove(section)
+            } else {
+                //sectionを開く処理
+                openedSections.insert(section)
+            }
+            //タップ時のアニメーションの実行
+            myTableView.reloadSections(IndexSet(integer: section), with: .fade)
+        }
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //タップを認識する処理
+        let view = UITableViewHeaderFooterView()
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(sectionHeaderDidTap(_:)))
+        view.addGestureRecognizer(gesture)
+        //タップしたsectionと開くsectionをイコールにする
+        view.tag = section
+        return view
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
        
         return self.sections.count
@@ -31,37 +52,54 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return self.sections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // return items [section].count
-        return items.count
+        if openedSections.contains(section) {
+            return items.count
+        } else {
+        return 0
+        }
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-       cell.textLabel?.text = items[indexPath.row]//[indexPath.row]
-//        let tmpDate = Calendar(identifier: .gregorian)
-//        let year = tmpDate.component(.year, from: date)
-//        cell.textLabel?.text = String(year)
-        cell.detailTextLabel?.text = "33"
+       cell.textLabel?.text = items[indexPath.row]
         
+        let marchString = "2020/03"
+        let aprilString = "2020/04"
+        dateFormatter.dateFormat = "yyyy/MM"
+        let marchDate: Date = dateFormatter.date(from: marchString)!
+        let aprilDate: Date = dateFormatter.date(from: aprilString)!
+        let realm = try! Realm()
+        
+        let marchTotal: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(dateFormatter.string(from: marchDate))'").sum(ofProperty: "distance")
+        let aprilTotal: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(dateFormatter.string(from: aprilDate))'").sum(ofProperty: "distance")
+        
+        if indexPath.section == 0 {
+        switch indexPath.row {
+        case 0:
+            cell.detailTextLabel?.text = "0"
+           
+        case 1:
+            cell.detailTextLabel?.text = "0"
+        case 2:
+             cell.detailTextLabel?.text = String(marchTotal) + "km"
+        case 3:
+            cell.detailTextLabel?.text = String(aprilTotal) + "km"
+
+        default:
+            cell.detailTextLabel?.text = ""
+        }
+        } else if indexPath.section == 1 {
+            switch indexPath.row {
+            case 0:
+                cell.detailTextLabel?.text = ""
+            default:
+                cell.detailTextLabel?.text = ""
+            }
+        }
         return cell
     }
-
         override func viewDidLoad() {
         super.viewDidLoad()
             myTableView.delegate = self
             myTableView.dataSource = self
-            
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
-
-}

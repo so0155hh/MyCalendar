@@ -17,6 +17,7 @@
 		9B4ED2F7240F0111001DC8B0 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4ED2F6240F0111001DC8B0 /* AddViewController.swift */; };
 		9B52D8492427AE0900371A9F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B52D8482427AE0900371A9F /* TableViewController.swift */; };
 		9B52D84B2429634A00371A9F /* DemoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B52D84A2429634A00371A9F /* DemoTableViewController.swift */; };
+		9B52D871242D760400371A9F /* AgeRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B52D870242D760400371A9F /* AgeRegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		9B4ED2F6240F0111001DC8B0 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		9B52D8482427AE0900371A9F /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		9B52D84A2429634A00371A9F /* DemoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTableViewController.swift; sourceTree = "<group>"; };
+		9B52D870242D760400371A9F /* AgeRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRegisterViewController.swift; sourceTree = "<group>"; };
 		EDF5A4ECCF03D449B072F4CD /* Pods-MyCalendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCalendar.release.xcconfig"; path = "Target Support Files/Pods-MyCalendar/Pods-MyCalendar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 				9B4EA8A4240DC26400C97FD9 /* AppDelegate.swift */,
 				9B4EA8A6240DC26400C97FD9 /* SceneDelegate.swift */,
 				9B4EA8A8240DC26400C97FD9 /* ViewController.swift */,
+				9B52D870242D760400371A9F /* AgeRegisterViewController.swift */,
 				9B4ED2F6240F0111001DC8B0 /* AddViewController.swift */,
 				9B52D8482427AE0900371A9F /* TableViewController.swift */,
 				9B52D84A2429634A00371A9F /* DemoTableViewController.swift */,
@@ -216,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B4EA8A9240DC26400C97FD9 /* ViewController.swift in Sources */,
+				9B52D871242D760400371A9F /* AgeRegisterViewController.swift in Sources */,
 				9B4EA8A5240DC26400C97FD9 /* AppDelegate.swift in Sources */,
 				9B52D84B2429634A00371A9F /* DemoTableViewController.swift in Sources */,
 				9B4ED2F7240F0111001DC8B0 /* AddViewController.swift in Sources */,
