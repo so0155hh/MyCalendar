@@ -25,14 +25,14 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         self.calendar.dataSource = self
         self.calendar.delegate = self
         //今日の印(赤丸)を消す
-       // calendar.today = nil
+        // calendar.today = nil
         let maxPitches = userDefaults.string(forKey: "myMax")
         monthTotalText.text = maxPitches
         
         let realm = try! Realm()
         // Do any additional setup after loading the view.
         notificationToken = realm.observe { Notification, realm in
-           
+            
             self.calendar.reloadData()
         }
     }
@@ -49,42 +49,22 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         let realm = try! Realm()
         var result = realm.objects(RunRecord.self)
         result = result.filter("date = '\(da)'")
-//        for record in result {
-//            if record.date == da {
-//                return record.distance + "km"
-//            }
-//        }
+        
         if let record = result.last {
             myRecord = String(record.distance)
             return myRecord + "球"
         }
         return "○"
     }
-    override func viewWillAppear(_ animated: Bool) {
-        //走った距離の合計を算出する
-//        let tmpDate = Calendar(identifier: .gregorian)
-//        let year = tmpDate.component(.year, from: date)
-//        let month = tmpDate.component(.month, from: date)
-//        let m = String(format: "%02d", month)
-//        let my = "\(year)/\(m)"
-//        let realm = try! Realm()
-        
-//        let monthTotal: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(my)'").sum(ofProperty: "distance")
-      //  let maxPitches = userDefaults.string(forKey: "myMax")
-        //monthTotalText.text = maxPitches
-       // monthTotalText.text = String(monthTotal) + "km"
-        
-        }
     @IBAction func backToCalendar(segue: UIStoryboardSegue) {
         let maxPitches = userDefaults.string(forKey: "myMax")
-               monthTotalText.text = maxPitches
+        monthTotalText.text = maxPitches
     }
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         if monthPosition == .previous || monthPosition == .next {
             calendar.setCurrentPage(date, animated: true)
         }
     }
-    
 }
 class RunRecord: Object {
     @objc dynamic var date: String = ""
