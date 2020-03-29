@@ -70,4 +70,8 @@ class RunRecord: Object {
     @objc dynamic var date: String = ""
     @objc dynamic var yearAndMonth = ""
     @objc dynamic var distance: Int = 0
+    
+    override static func primaryKey() -> String? {
+          return "date"
+      }
 }

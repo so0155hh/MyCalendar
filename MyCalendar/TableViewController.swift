@@ -27,8 +27,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
            myTableView.dataSource = self
            let maxPitches = userDefaults.string(forKey: "myMax")
            myPitchesRecord.text = maxPitches
+   
    }
-    
     var openedSections = Set<Int>()
     //sectionをタップした時の処理
     @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
@@ -79,7 +79,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let aprilDate: Date = dateFormatter.date(from: aprilString)!
        let mayDate:Date = dateFormatter.date(from: mayString)!
        
-        let maxPitchesCount = Int(myPitchesRecord.text!)!
+     //   let maxPitchesCount = Int(myPitchesRecord.text!)
         let realm = try! Realm()
         //フィルターをかけて合計投球数を求める
         let marchTotal: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(dateFormatter.string(from: marchDate))'").sum(ofProperty: "distance")
@@ -95,7 +95,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.detailTextLabel?.text = "0"
         case 2:
              cell.detailTextLabel?.text = String(marchTotal)
-             if marchTotal >= maxPitchesCount {
+             //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
+             if marchTotal >= Int(myPitchesRecord.text!)! {
                 cell.backgroundColor = .red
             }
         case 3:
@@ -114,6 +115,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.detailTextLabel?.text = ""
             }
         }
+        
        //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
 //        if let myPitch = Int(cell.detailTextLabel!.text!),
 //           let maxPitchesCount = Int(myPitchesRecord.text!) {

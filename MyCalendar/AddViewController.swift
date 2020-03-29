@@ -44,7 +44,7 @@ class AddViewController: UIViewController {
         
         try! realm.write {
             let Records = [RunRecord(value: ["date": todayLabel.text!, "distance": intDistance!])]
-            realm.add(Records)
+            realm.add(Records, update: .all)
         }
         self.dismiss(animated: true, completion: nil)
         print("データ書き込み中")
