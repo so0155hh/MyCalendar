@@ -25,10 +25,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
        super.viewDidLoad()
            myTableView.delegate = self
            myTableView.dataSource = self
-           let maxPitches = userDefaults.string(forKey: "myMax")
-           myPitchesRecord.text = maxPitches
-   
    }
+    override func viewWillAppear(_ animated: Bool) {
+        //上限投球数の表示を更新
+        let maxPitches = userDefaults.string(forKey: "myMax")
+        myPitchesRecord.text = maxPitches
+    }
     var openedSections = Set<Int>()
     //sectionをタップした時の処理
     @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
@@ -69,6 +71,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        //背景色はclearに設定する
+        cell.backgroundColor = .clear
+        
        cell.textLabel?.text = items[indexPath.row]
         //各月の合計投球数を算出する
         let marchString = "2020/03"
@@ -89,18 +94,25 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //2020年の記録を表示
         if indexPath.section == 0 {
         switch indexPath.row {
+            //1月
         case 0:
             cell.detailTextLabel?.text = "0"
+            //2月
         case 1:
             cell.detailTextLabel?.text = "0"
+            //3月
         case 2:
-             cell.detailTextLabel?.text = String(marchTotal)
-             //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
-             if marchTotal >= Int(myPitchesRecord.text!)! {
-                cell.backgroundColor = .red
-            }
+            cell.detailTextLabel?.text = String(marchTotal)
+//       //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
+//            else if marchTotal >= Int(myPitchesRecord.text!)! {
+//                cell.backgroundColor = .red
+           //  }
         case 3:
             cell.detailTextLabel?.text = String(aprilTotal)
+             //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
+//            else if aprilTotal >= Int(myPitchesRecord.text!)! {
+//                cell.backgroundColor = .red
+           // }
         case 4:
             cell.detailTextLabel?.text = String(mayTotal)
 
@@ -115,14 +127,19 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.detailTextLabel?.text = ""
             }
         }
-        
-       //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
-//        if let myPitch = Int(cell.detailTextLabel!.text!),
-//           let maxPitchesCount = Int(myPitchesRecord.text!) {
-//                if myPitch >= maxPitchesCount {
-//                    cell.backgroundColor = .red
-//            }
-//        }
+        //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
+        if myPitchesRecord.text == nil {
+            let alertController = UIAlertController(title: "エラー", message: "投球数の上限を「Edit」より設定してください", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(defaultAction)
+            present(alertController, animated: true, completion: nil)
+        }
+       else if let myPitch = Int(cell.detailTextLabel!.text!),
+            let maxPitchesCount = Int(myPitchesRecord.text!) {
+            if myPitch >= maxPitchesCount {
+                cell.backgroundColor = .red
+            }
+        }
         return cell
     }
     }

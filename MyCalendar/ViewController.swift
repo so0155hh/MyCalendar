@@ -26,6 +26,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         self.calendar.delegate = self
         //今日の印(赤丸)を消す
         // calendar.today = nil
+        
         let maxPitches = userDefaults.string(forKey: "myMax")
         monthTotalText.text = maxPitches
         
@@ -36,6 +37,42 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
             self.calendar.reloadData()
         }
     }
+    func judgeHoliday (_ date: Date) -> Bool {
+        
+        let year = tmpDate.component(.year, from: date)
+        let month = tmpDate.component(.month, from: date)
+        let day = tmpDate.component(.day, from: date)
+        let holiday = CalculateCalendarLogic()
+     return holiday.judgeJapaneseHoliday(year: year, month: month, day: day)
+    }
+    //曜日判定
+     func getWeekIdx(_ date: Date) -> Int{
+         return tmpDate.component(.weekday, from: date)
+    }
+    // date型 -> 年月日をIntで取得
+//    func getDay(_ date:Date) -> (Int,Int,Int){
+//
+//        let year = tmpDate.component(.year, from: date)
+//               let month = tmpDate.component(.month, from: date)
+//               let day = tmpDate.component(.day, from: date)
+//               return (year,month,day)
+//    }
+    // 土日や祝日の日の文字色を変える
+       func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+           //祝日判定をする
+           if self.judgeHoliday(date){
+               return UIColor.red
+           }
+        let weekday = self.getWeekIdx(date)
+        
+               if weekday == 1 {
+                   return UIColor.red
+               }
+               else if weekday == 7 {
+                   return UIColor.blue
+               }
+               return nil
+           }
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
         var myRecord = ""
         let tmpDate = Calendar(identifier: .gregorian)

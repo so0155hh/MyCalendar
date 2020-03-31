@@ -16,7 +16,7 @@ class AgeRegisterViewController: UIViewController {
     @IBOutlet weak var firstLabel: UILabel!
     @IBOutlet weak var secondLabel: UILabel!
     @IBOutlet weak var maxPitches: UILabel!
-    
+   
     let userDefaults = UserDefaults.standard
     
     @IBAction func resultButton(_ sender: Any) {

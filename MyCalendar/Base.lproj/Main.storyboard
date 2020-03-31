@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xGB-C4-8ZS">
-    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,11 +12,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyCalendar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-zB-VBN" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="88" width="375" height="570"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="503"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="firstWeekday">
                                         <integer key="value" value="1"/>
@@ -63,13 +63,13 @@
                                 </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="月間投球数上限(球)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTU-Ye-YB4">
-                                <rect key="frame" x="20" y="688" width="175" height="21"/>
+                                <rect key="frame" x="20" y="577" width="175" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkP-qj-iCD">
-                                <rect key="frame" x="255" y="688" width="25" height="21"/>
+                                <rect key="frame" x="255" y="577" width="25" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -134,31 +134,25 @@
             <objects>
                 <viewController id="pfd-Jl-vyn" customClass="AgeRegisterViewController" customModule="MyCalendar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8gp-Zs-Nh2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの年齢を入力してください" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vs-5j-sOF">
-                                <rect key="frame" x="20" y="86" width="290.66666666666669" height="23"/>
+                                <rect key="frame" x="20" y="86" width="290.5" height="23"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="歳" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZV-de-EBd">
-                                <rect key="frame" x="60.999999999999993" y="144" width="20.666666666666664" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xz4-iN-0BU">
-                                <rect key="frame" x="20" y="134" width="33" height="34"/>
+                                <rect key="frame" x="20" y="134" width="100" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="OWS-3g-ARy"/>
+                                    <constraint firstAttribute="width" constant="100" id="AHd-nK-Irb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVi-PZ-3af">
-                                <rect key="frame" x="20" y="218" width="296" height="44"/>
+                                <rect key="frame" x="20" y="218" width="335" height="44"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="投球数を確認する"/>
                                 <connections>
@@ -166,13 +160,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの月間投球数は" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f60-sd-4Kv">
-                                <rect key="frame" x="20" y="297" width="296" height="24"/>
+                                <rect key="frame" x="20" y="297" width="335" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgo-3L-OfS">
-                                <rect key="frame" x="20" y="354" width="296" height="100"/>
+                                <rect key="frame" x="20" y="354" width="335" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="Rs9-1g-Ojr"/>
                                 </constraints>
@@ -195,28 +189,35 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="歳" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZV-de-EBd">
+                                <rect key="frame" x="130" y="144" width="20.5" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="V4w-CH-W26" firstAttribute="trailing" secondItem="vZV-de-EBd" secondAttribute="trailing" constant="254.33333333333334" id="4fe-NG-lUf"/>
                             <constraint firstItem="f60-sd-4Kv" firstAttribute="leading" secondItem="V4w-CH-W26" secondAttribute="leading" constant="20" id="AMn-uX-eeY"/>
-                            <constraint firstItem="vZV-de-EBd" firstAttribute="bottom" secondItem="xz4-iN-0BU" secondAttribute="bottom" id="BZc-Oc-HZ7"/>
                             <constraint firstItem="V4w-CH-W26" firstAttribute="trailing" secondItem="gVi-PZ-3af" secondAttribute="trailing" constant="20" id="EOy-X1-orA"/>
-                            <constraint firstItem="gVi-PZ-3af" firstAttribute="top" secondItem="vZV-de-EBd" secondAttribute="bottom" constant="50" id="HSN-kC-yeg"/>
+                            <constraint firstItem="vZV-de-EBd" firstAttribute="top" secondItem="1vs-5j-sOF" secondAttribute="bottom" constant="35" id="Gyj-AV-l0m"/>
                             <constraint firstItem="gVi-PZ-3af" firstAttribute="leading" secondItem="V4w-CH-W26" secondAttribute="leading" constant="20" id="Hnv-nO-SYl"/>
                             <constraint firstItem="V4w-CH-W26" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JeL-1U-Zif" secondAttribute="trailing" symbolic="YES" id="Lb1-Jf-HuY"/>
                             <constraint firstItem="1vs-5j-sOF" firstAttribute="top" secondItem="V4w-CH-W26" secondAttribute="top" constant="30" id="MxL-Oz-bPt"/>
-                            <constraint firstItem="xz4-iN-0BU" firstAttribute="leading" secondItem="V4w-CH-W26" secondAttribute="leading" constant="20" id="Q7c-3I-8DS"/>
-                            <constraint firstItem="xz4-iN-0BU" firstAttribute="top" secondItem="1vs-5j-sOF" secondAttribute="bottom" constant="25" id="T2R-8q-ZOs"/>
+                            <constraint firstItem="xz4-iN-0BU" firstAttribute="top" secondItem="1vs-5j-sOF" secondAttribute="bottom" constant="25" id="RlY-2h-3Lb"/>
                             <constraint firstItem="1vs-5j-sOF" firstAttribute="leading" secondItem="V4w-CH-W26" secondAttribute="leading" constant="20" id="Ttn-Ay-mAn"/>
-                            <constraint firstItem="vZV-de-EBd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xz4-iN-0BU" secondAttribute="trailing" constant="8" symbolic="YES" id="V9C-Jm-kb5"/>
+                            <constraint firstItem="gVi-PZ-3af" firstAttribute="top" secondItem="vZV-de-EBd" secondAttribute="bottom" constant="50" id="WgN-b7-jTO"/>
+                            <constraint firstItem="vZV-de-EBd" firstAttribute="leading" secondItem="xz4-iN-0BU" secondAttribute="trailing" constant="10" id="bDS-NG-gp2"/>
                             <constraint firstItem="V4w-CH-W26" firstAttribute="trailing" secondItem="f60-sd-4Kv" secondAttribute="trailing" constant="20" id="baX-aa-zrh"/>
+                            <constraint firstItem="gVi-PZ-3af" firstAttribute="top" secondItem="xz4-iN-0BU" secondAttribute="bottom" constant="50" id="bls-lM-rlv"/>
                             <constraint firstItem="JeL-1U-Zif" firstAttribute="top" secondItem="f60-sd-4Kv" secondAttribute="bottom" constant="4" id="cgn-7W-Eyr"/>
                             <constraint firstItem="hgo-3L-OfS" firstAttribute="top" secondItem="JeL-1U-Zif" secondAttribute="bottom" constant="5" id="jtA-P8-vcr"/>
                             <constraint firstItem="V4w-CH-W26" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1vs-5j-sOF" secondAttribute="trailing" symbolic="YES" id="kWA-nf-iBw"/>
                             <constraint firstItem="EPI-b3-g92" firstAttribute="leading" secondItem="V4w-CH-W26" secondAttribute="leading" constant="20" id="mBU-G4-HE4"/>
                             <constraint firstItem="V4w-CH-W26" firstAttribute="trailing" secondItem="hgo-3L-OfS" secondAttribute="trailing" constant="20" id="o1s-To-Ihr"/>
+                            <constraint firstItem="xz4-iN-0BU" firstAttribute="leading" secondItem="V4w-CH-W26" secondAttribute="leading" constant="20" id="oWE-BI-1g8"/>
                             <constraint firstItem="hgo-3L-OfS" firstAttribute="leading" secondItem="V4w-CH-W26" secondAttribute="leading" constant="20" id="rUj-mN-USz"/>
+                            <constraint firstItem="V4w-CH-W26" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="vZV-de-EBd" secondAttribute="trailing" constant="224.5" id="rvL-rS-oUf"/>
                             <constraint firstItem="JeL-1U-Zif" firstAttribute="leading" secondItem="EPI-b3-g92" secondAttribute="trailing" constant="5" id="vi0-5z-yVF"/>
                             <constraint firstItem="f60-sd-4Kv" firstAttribute="top" secondItem="gVi-PZ-3af" secondAttribute="bottom" constant="35" id="xM7-zZ-1Cl"/>
                             <constraint firstItem="JeL-1U-Zif" firstAttribute="bottom" secondItem="EPI-b3-g92" secondAttribute="bottom" id="znR-L9-jPr"/>
@@ -254,7 +255,7 @@
             <objects>
                 <viewController id="wzc-FR-F8P" customClass="AddViewController" customModule="MyCalendar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JCF-aY-qzv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lx-zZ-E3o">
@@ -309,7 +310,7 @@
                     <tabBarItem key="tabBarItem" title="カレンダー" id="srj-M2-Lzw"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="f3j-oq-zck">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -326,11 +327,11 @@
             <objects>
                 <viewController id="5KQ-YC-QfS" customClass="TableViewController" customModule="MyCalendar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="haF-iW-GLh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9b8-fH-SCB">
-                                <rect key="frame" x="0.0" y="88" width="375" height="561"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="494"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="gX6-w0-Y0S" detailTextLabel="Lec-6Z-7Rh" rowHeight="97" style="IBUITableViewCellStyleValue1" id="SNp-g2-F7i">
@@ -348,7 +349,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lec-6Z-7Rh">
-                                                    <rect key="frame" x="309.66666666666669" y="37" width="50.333333333333336" height="24"/>
+                                                    <rect key="frame" x="309.5" y="37" width="50.5" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
@@ -364,13 +365,13 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上限投球数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8EH-ga-3GI">
-                                <rect key="frame" x="44" y="679" width="127" height="30"/>
+                                <rect key="frame" x="44" y="568" width="127" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzO-kn-B6j">
-                                <rect key="frame" x="259.66666666666669" y="679" width="16" height="30"/>
+                                <rect key="frame" x="259.5" y="568" width="16" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -424,7 +425,7 @@
                     <tabBarItem key="tabBarItem" title="一覧" id="9TZ-NC-urt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2fF-OC-bcR">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
