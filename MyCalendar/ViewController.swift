@@ -31,9 +31,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         monthTotalText.text = maxPitches
         
         let realm = try! Realm()
-        // Do any additional setup after loading the view.
         notificationToken = realm.observe { Notification, realm in
-            
             self.calendar.reloadData()
         }
     }
@@ -49,14 +47,6 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
      func getWeekIdx(_ date: Date) -> Int{
          return tmpDate.component(.weekday, from: date)
     }
-    // date型 -> 年月日をIntで取得
-//    func getDay(_ date:Date) -> (Int,Int,Int){
-//
-//        let year = tmpDate.component(.year, from: date)
-//               let month = tmpDate.component(.month, from: date)
-//               let day = tmpDate.component(.day, from: date)
-//               return (year,month,day)
-//    }
     // 土日や祝日の日の文字色を変える
        func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
            //祝日判定をする
@@ -88,7 +78,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         result = result.filter("date = '\(da)'")
         
         if let record = result.last {
-            myRecord = String(record.distance)
+            myRecord = String(record.pitches)
             return myRecord + "球"
         }
         return "○"
@@ -97,16 +87,15 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         let maxPitches = userDefaults.string(forKey: "myMax")
         monthTotalText.text = maxPitches
     }
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if monthPosition == .previous || monthPosition == .next {
-            calendar.setCurrentPage(date, animated: true)
-        }
-    }
+//    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+//        if monthPosition == .previous || monthPosition == .next {
+//            calendar.setCurrentPage(date, animated: true)
+//        }
+  //  }
 }
 class RunRecord: Object {
     @objc dynamic var date: String = ""
-    @objc dynamic var yearAndMonth = ""
-    @objc dynamic var distance: Int = 0
+    @objc dynamic var pitches: Int = 0
     
     override static func primaryKey() -> String? {
           return "date"

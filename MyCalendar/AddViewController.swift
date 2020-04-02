@@ -12,22 +12,30 @@ import RealmSwift
 let realm = try! Realm()
 let date = Date()
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var todayLabel: UILabel!
     @IBOutlet weak var pitchesRecordText: UITextField!
+    @IBOutlet weak var saveBtn: UIBarButtonItem!
     
+    let userDefaults = UserDefaults.standard
     let formatter2 = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pitchesRecordText.delegate = self
         //本日の日付を表示
         let formatter = DateFormatter()
         formatter.timeStyle = .none
         formatter.dateStyle = .short
         formatter.locale = Locale(identifier: "ja_JP")
         todayLabel.text = formatter.string(from: date)
+        
+        //入力した投球数の保存
+        let myPitches = userDefaults.string(forKey: "myPitches")
+        pitchesRecordText.text = myPitches
+        
         //入力をnumberPadにする
         let toolBar = UIToolbar(frame: CGRect(x:0, y:0, width: 320, height: 40))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -40,16 +48,28 @@ class AddViewController: UIViewController {
         self.view.endEditing(true)
     }
     @IBAction func saveBtn(_ sender: Any) {
-        let intDistance = Int(pitchesRecordText.text!)
-        
+        if let intPitches = Int(pitchesRecordText.text!) {
         try! realm.write {
-            let Records = [RunRecord(value: ["date": todayLabel.text!, "distance": intDistance!])]
+            let Records = [RunRecord(value: ["date": todayLabel.text!, "pitches": intPitches])]
             realm.add(Records, update: .all)
         }
         self.dismiss(animated: true, completion: nil)
         print("データ書き込み中")
+        }
+        userDefaults.set(pitchesRecordText.text!, forKey: "myPitches")
+        userDefaults.synchronize()
     }
     @IBAction func cancelBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    //textFieldが空欄のとき、saveボタンを押せなくする
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { _ in self.saveBtn.isEnabled = self.pitchesRecordText.text != ""
+        }
+        return true
+    }
+    //textFieldタップ時に全選択にする
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
     }
 }

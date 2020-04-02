@@ -56,6 +56,9 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="fakedSelectedDay">
                                         <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                        <color key="value" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="Wf0-LN-9eV"/>
@@ -91,12 +94,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="Im1-G3-1Uy">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="dUN-Dj-qjB">
+                        <barButtonItem key="leftBarButtonItem" title="上限設定" id="dUN-Dj-qjB">
                             <connections>
                                 <segue destination="HqL-XL-4hV" kind="presentation" id="mYi-fA-t1x"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3DD-ed-5F6">
+                        <barButtonItem key="rightBarButtonItem" title="投球数の登録・変更" id="3DD-ed-5F6">
                             <connections>
                                 <segue destination="FUN-44-VR6" kind="presentation" id="btV-X6-RIH"/>
                             </connections>
@@ -296,6 +299,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="pitchesRecordText" destination="cda-0v-c9K" id="RaL-hC-mWS"/>
+                        <outlet property="saveBtn" destination="SE0-QX-SSD" id="UWT-ln-FYM"/>
                         <outlet property="todayLabel" destination="1lx-zZ-E3o" id="DVo-6Y-ldQ"/>
                     </connections>
                 </viewController>
