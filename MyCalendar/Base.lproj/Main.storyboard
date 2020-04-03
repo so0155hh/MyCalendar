@@ -311,7 +311,7 @@
         <scene sceneID="ccx-s1-Z3a">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ElP-c6-hri" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="カレンダー" id="srj-M2-Lzw"/>
+                    <tabBarItem key="tabBarItem" title="カレンダー" image="calendar" catalog="system" id="srj-M2-Lzw"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="f3j-oq-zck">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -426,7 +426,7 @@
         <scene sceneID="Jcq-2y-QEu">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="H5o-Kr-ruS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="一覧" id="9TZ-NC-urt"/>
+                    <tabBarItem key="tabBarItem" title="一覧" image="doc.text" catalog="system" id="9TZ-NC-urt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2fF-OC-bcR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -460,4 +460,8 @@
             <point key="canvasLocation" x="1883" y="-576"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="calendar" catalog="system" width="64" height="52"/>
+        <image name="doc.text" catalog="system" width="56" height="64"/>
+    </resources>
 </document>
