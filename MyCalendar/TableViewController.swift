@@ -24,14 +24,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     private func getCellData(indexPath: IndexPath) -> (text: String, detail: String) {
         let year = tmpDate.component(.year, from: date)
-        let month = (indexPath.row > 10) ? "\(indexPath.row - 1)" : "\(indexPath.row - 1)"
+        let month = (indexPath.row > 10) ? "\(indexPath.row - 1)" : "\0(indexPath.row - 1)"
         let yearMonth = "\(year)/\(month)"
         let date = dateFormatter.date(from: yearMonth)!
         let total: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(dateFormatter.string(from: date))'").sum(ofProperty: "pitches")
         return (items[indexPath.row], String(total))
-        
     }
-   
     override func viewDidLoad() {
         super.viewDidLoad()
         myTableView.delegate = self
@@ -44,28 +42,28 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     var openedSections = Set<Int>()
     //sectionをタップした時の処理
-//    @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
-//        if let section = sender.view?.tag {
-//            if openedSections.contains(section) {
-//                //sectionを閉じる処理
-//                openedSections.remove(section)
-//            } else {
-//                //sectionを開く処理
-//                openedSections.insert(section)
-//            }
-//            //タップ時のアニメーションの実行
-//            myTableView.reloadSections(IndexSet(integer: section), with: .fade)
-//        }
-//    }
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        //タップを認識する処理
-//        let view = UITableViewHeaderFooterView()
-//        let gesture = UITapGestureRecognizer(target: self, action: #selector(sectionHeaderDidTap(_:)))
-//        view.addGestureRecognizer(gesture)
-//        //タップしたsectionと開くsectionをイコールにする
-//        view.tag = section
-//        return view
-//    }
+    @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
+        if let section = sender.view?.tag {
+            if openedSections.contains(section) {
+                //sectionを閉じる処理
+                openedSections.remove(section)
+            } else {
+                //sectionを開く処理
+                openedSections.insert(section)
+            }
+            //タップ時のアニメーションの実行
+            myTableView.reloadSections(IndexSet(integer: section), with: .fade)
+        }
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //タップを認識する処理
+        let view = UITableViewHeaderFooterView()
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(sectionHeaderDidTap(_:)))
+        view.addGestureRecognizer(gesture)
+        //タップしたsectionと開くsectionをイコールにする
+        view.tag = section
+        return view
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return self.sections.count
@@ -82,10 +80,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let month = (indexPath.row > 10) ? "\(indexPath.row - 1)" : "\(indexPath.row - 1)"
-        print(month)
+   
         //背景色はclearに設定する
-        cell.backgroundColor = .clear
+     //   cell.backgroundColor = .clear
         let (text, detail) = getCellData(indexPath: indexPath)
         cell.textLabel?.text = text
         cell.detailTextLabel?.text = detail
