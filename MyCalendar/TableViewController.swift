@@ -13,27 +13,33 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var myPitchesRecord: UILabel!
-    
-   // let date = Date()
+   
     let dateFormatter = DateFormatter()
     let userDefaults = UserDefaults.standard
     let realm = try! Realm()
     let sections = ["2020年", "2021年", "2022年"]
     let items = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
-    let tmpDate = Calendar(identifier: .gregorian)
+    let nowDate = Calendar(identifier: .gregorian)
     
     private func getCellData(indexPath: IndexPath) -> (text: String, detail: String) {
-        let year = tmpDate.component(.year, from: date)
-        let month = (indexPath.row > 10) ? "\(indexPath.row - 1)" : "\0(indexPath.row - 1)"
+        let year = nowDate.component(.year, from: Date())
+        let month = (indexPath.row > 10) ? "\(indexPath.row - 1)" : "0" + "\(indexPath.row - 1)"
+       
         let yearMonth = "\(year)/\(month)"
-        let date = dateFormatter.date(from: yearMonth)!
+        
+        if let date = dateFormatter.date(from: yearMonth) {
+       
         let total: Int = realm.objects(RunRecord.self).filter("date BEGINSWITH '\(dateFormatter.string(from: date))'").sum(ofProperty: "pitches")
-        return (items[indexPath.row], String(total))
+     
+        return(items[indexPath.row], String(total))
+        }
+        return(items[indexPath.row], "エラー")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         myTableView.delegate = self
         myTableView.dataSource = self
+       
     }
     override func viewWillAppear(_ animated: Bool) {
         //上限投球数の表示を更新
@@ -86,7 +92,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let (text, detail) = getCellData(indexPath: indexPath)
         cell.textLabel?.text = text
         cell.detailTextLabel?.text = detail
-        
+        return cell
 //        if myPitchesRecord.text == nil {
 //            let alertController = UIAlertController(title: "エラー", message: "投球数の上限を設定してください", preferredStyle: .alert)
 //            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -94,7 +100,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //            present(alertController, animated: true, completion: nil)
 //        }
         
-        return cell
+      
       //  cell.textLabel?.text = items[indexPath.row]
         //各月の合計投球数を算出する
 //        let marchString = "2020/03"
