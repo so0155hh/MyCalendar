@@ -10,10 +10,8 @@ import UIKit
 import RealmSwift
 
 let realm = try! Realm()
-let date = Date()
 
 class AddViewController: UIViewController, UITextFieldDelegate {
-    
     
     @IBOutlet weak var todayLabel: UILabel!
     @IBOutlet weak var pitchesRecordText: UITextField!
@@ -24,13 +22,14 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let date = Date()
         pitchesRecordText.delegate = self
         //本日の日付を表示
         let formatter = DateFormatter()
         formatter.timeStyle = .none
         formatter.dateStyle = .short
         formatter.locale = Locale(identifier: "ja_JP")
-        todayLabel.text = formatter.string(from: date)
+      todayLabel.text = formatter.string(from: date)
         
         //入力した投球数の保存
         let myPitches = userDefaults.string(forKey: "myPitches")
