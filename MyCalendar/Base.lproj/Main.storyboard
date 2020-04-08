@@ -396,8 +396,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="月間投球数(単位：球)" id="f5N-0G-CyK"/>
                     <connections>
-                        <outlet property="myPitchesRecord" destination="gzO-kn-B6j" id="nFJ-qq-tRZ"/>
                         <outlet property="myTableView" destination="9b8-fH-SCB" id="lGN-3Z-DRq"/>
+                        <outlet property="settedMaxPitches" destination="gzO-kn-B6j" id="Bda-me-hqe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XYJ-mG-fef" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

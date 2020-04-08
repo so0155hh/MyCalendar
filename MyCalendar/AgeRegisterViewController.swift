@@ -26,6 +26,7 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
                 firstLabel.isHidden = true
                 secondLabel.isHidden = true
                 alertLabel.isHidden = false
+              //  maxPitches.text = String(100)
                 maxPitches.isHidden = true
                 alertLabel.text = "まずは野球を楽しみましょう!"
                 
@@ -51,7 +52,9 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
                 alertLabel.text = "月に2000球以上投げないようにしましょう。"
             }
         }
+        //上限投球数を保存
         userDefaults.set(Int(maxPitches.text!), forKey: "myMax")
+        //年齢を保存
         userDefaults.set(ageLabel.text!, forKey: "myAge")
         userDefaults.synchronize()
     }
