@@ -93,16 +93,25 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let (text, detail) = getCellData(indexPath: indexPath)
         cell.textLabel?.text = text
         cell.detailTextLabel?.text = detail
-       
-        if settedMaxPitches.text == nil {
+        
+        
+        if let intDetail = Int(detail),
+            let intMaxPitches = Int(settedMaxPitches.text!) {
+        if intDetail >= intMaxPitches {
+            cell.backgroundColor = .red
+        } else {
             cell.backgroundColor = .clear
-             //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
-        } else if let myPitch = Int(cell.detailTextLabel!.text!),
-        let maxPitchesCount = Int(settedMaxPitches.text!) {
-            if myPitch >= maxPitchesCount {
-                cell.backgroundColor = .red
             }
         }
+//        if settedMaxPitches.text == nil {
+//            cell.backgroundColor = .clear
+//             //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
+//        } else if let myPitch = Int(cell.detailTextLabel!.text!),
+//        let maxPitchesCount = Int(settedMaxPitches.text!) {
+//            if myPitch >= maxPitchesCount {
+//                cell.backgroundColor = .red
+//            }
+//        }
         return cell
     }
     }
