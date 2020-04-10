@@ -21,8 +21,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let items = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
     let nowDate = Calendar(identifier: .gregorian)
     
-    private func getCellData(indexPath: IndexPath) -> (text: String, detail: String) {
-           
+    private func getCellData(indexPath: IndexPath) -> (text: String, detail: Int) {
+        
         let year = indexPath.section + 2020
         let month = (indexPath.row > 8) ? "\(indexPath.row + 1)" : "0" + "\(indexPath.row + 1)"
         let yearMonth = "\(year)/\(month)"
@@ -32,21 +32,23 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let totalPitches: Int = realm.objects(RunRecord.self)
                 .filter("date BEGINSWITH '\(dateFormatter.string(from: date))'")
                 .sum(ofProperty: "pitches")
-           
-            return(items[indexPath.row], String(totalPitches))
+            
+            //  return(items[indexPath.row], String(totalPitches))
+            return(items[indexPath.row], totalPitches)
         }
-        return(items[indexPath.row], "エラー")
+        return(items[indexPath.row], 0)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         myTableView.delegate = self
         myTableView.dataSource = self
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         //上限投球数の表示を更新
         let maxPitches = userDefaults.string(forKey: "myMax")
         settedMaxPitches.text = maxPitches
+        //        let maxPitches = userDefaults.integer(forKey: "myMax")
+        //        settedMaxPitches.text = String(maxPitches)
     }
     var openedSections = Set<Int>()
     //sectionをタップした時の処理
@@ -92,27 +94,28 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.backgroundColor = .clear
         let (text, detail) = getCellData(indexPath: indexPath)
         cell.textLabel?.text = text
-        cell.detailTextLabel?.text = detail
-        
-        
-        if let intDetail = Int(detail),
-            let intMaxPitches = Int(settedMaxPitches.text!) {
-        if intDetail >= intMaxPitches {
-            cell.backgroundColor = .red
-        } else {
+        cell.detailTextLabel?.text = String(detail)
+        let maxPitches = userDefaults.integer(forKey: "myMax")
+        let settedAge = userDefaults.integer(forKey: "myAge")
+        //6歳未満は背景色の変更なし
+        if settedAge < 6 {
             cell.backgroundColor = .clear
-            }
+            //実際の投球数が設定した上限を超えたら、cellを赤色に変更
+        } else if detail >= maxPitches {
+            cell.backgroundColor = .red
         }
-//        if settedMaxPitches.text == nil {
-//            cell.backgroundColor = .clear
-//             //実際の投球数が月間投球数の上限を超えた場合、その月の背景を赤にする
-//        } else if let myPitch = Int(cell.detailTextLabel!.text!),
-//        let maxPitchesCount = Int(settedMaxPitches.text!) {
-//            if myPitch >= maxPitchesCount {
-//                cell.backgroundColor = .red
-//            }
-//        }
+        //        if let intDetail = Int(detail),
+        //            let intMaxPitches = Int(settedMaxPitches.text!) {
+        //        if intDetail >= intMaxPitches {
+        //            cell.backgroundColor = .red
+        //        } else {
+        //            cell.backgroundColor = .clear
+        //            }
+        //        } else {
+        //            cell.backgroundColor = .clear
+        //        }
+        
         return cell
     }
-    }
+}
 
