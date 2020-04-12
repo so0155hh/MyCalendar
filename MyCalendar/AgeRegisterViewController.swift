@@ -26,7 +26,6 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
                 firstLabel.isHidden = true
                 secondLabel.isHidden = true
                 alertLabel.isHidden = false
-              //  maxPitches.text = String(100)
                 maxPitches.isHidden = true
                 alertLabel.text = "まずは野球を楽しみましょう!"
                 

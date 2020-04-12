@@ -17,13 +17,15 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let dateFormatter = DateFormatter()
     let userDefaults = UserDefaults.standard
     let realm = try! Realm()
-    let sections = ["2020年", "2021年", "2022年"]
-    let items = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
+    let firstYear = 2020
+    let sections = ["\(firstYear)年", "\(firstYear + 1)年", "\(firstYear + 2)年"]
+
     let nowDate = Calendar(identifier: .gregorian)
+    let items = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
     
     private func getCellData(indexPath: IndexPath) -> (text: String, detail: Int) {
         
-        let year = indexPath.section + 2020
+        let year = indexPath.section + firstYear
         let month = (indexPath.row > 8) ? "\(indexPath.row + 1)" : "0" + "\(indexPath.row + 1)"
         let yearMonth = "\(year)/\(month)"
         
@@ -76,10 +78,14 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return self.sections.count
+        let sections = ["\(firstYear)年","\(firstYear + 1)年", "\(firstYear + 2)年"]
+       // return self.sections.count
+        return sections.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sections[section]
+         let sections = ["\(firstYear)年","\(firstYear + 1)年", "\(firstYear + 2)年"]
+       // return self.sections[section]
+        return sections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if openedSections.contains(section) {
@@ -98,23 +104,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let maxPitches = userDefaults.integer(forKey: "myMax")
         let settedAge = userDefaults.integer(forKey: "myAge")
         //6歳未満は背景色の変更なし
-        if settedAge < 6 {
-            cell.backgroundColor = .clear
-            //実際の投球数が設定した上限を超えたら、cellを赤色に変更
-        } else if detail >= maxPitches {
+       if detail >= maxPitches, settedAge >= 6 {
             cell.backgroundColor = .red
-        }
-        //        if let intDetail = Int(detail),
-        //            let intMaxPitches = Int(settedMaxPitches.text!) {
-        //        if intDetail >= intMaxPitches {
-        //            cell.backgroundColor = .red
-        //        } else {
-        //            cell.backgroundColor = .clear
-        //            }
-        //        } else {
-        //            cell.backgroundColor = .clear
-        //        }
-        
+       }
         return cell
     }
 }

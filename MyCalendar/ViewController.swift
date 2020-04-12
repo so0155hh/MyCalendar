@@ -25,7 +25,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         self.calendar.dataSource = self
         self.calendar.delegate = self
         //今日の印(赤丸)を消す
-        // calendar.today = nil
+         calendar.today = nil
         
         let maxPitches = userDefaults.string(forKey: "myMax")
         monthTotalText.text = maxPitches
