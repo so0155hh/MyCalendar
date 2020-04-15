@@ -26,7 +26,6 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         self.calendar.delegate = self
         //今日の印(赤丸)を消す
          calendar.today = nil
-        
         let maxPitches = userDefaults.string(forKey: "myMax")
         monthTotalText.text = maxPitches
         
@@ -74,7 +73,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         let da = "\(year)/\(m)/\(d)"
         //年月日が一致したらサブタイトルに走った距離を表示
         let realm = try! Realm()
-        var result = realm.objects(RunRecord.self)
+        var result = realm.objects(PitchesRecord.self)
         result = result.filter("date = '\(da)'")
         
         if let record = result.last {
@@ -93,7 +92,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
 //        }
   //  }
 }
-class RunRecord: Object {
+class PitchesRecord: Object {
     @objc dynamic var date: String = ""
     @objc dynamic var pitches: Int = 0
     

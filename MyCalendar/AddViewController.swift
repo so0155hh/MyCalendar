@@ -18,7 +18,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var saveBtn: UIBarButtonItem!
     
     let userDefaults = UserDefaults.standard
-    let formatter2 = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +48,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveBtn(_ sender: Any) {
         if let intPitches = Int(pitchesRecordText.text!) {
         try! realm.write {
-            let Records = [RunRecord(value: ["date": todayLabel.text!, "pitches": intPitches])]
+            let Records = [PitchesRecord(value: ["date": todayLabel.text!, "pitches": intPitches])]
             realm.add(Records, update: .all)
         }
         self.dismiss(animated: true, completion: nil)

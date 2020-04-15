@@ -18,7 +18,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let userDefaults = UserDefaults.standard
     let realm = try! Realm()
     let firstYear = 2020
-    let sections = ["\(firstYear)年", "\(firstYear + 1)年", "\(firstYear + 2)年"]
+    //メンバ変数を定義するとき、他の変数を使って初期化はできない。
+    var sections: [String] = []
+   // var openedSections = Set<Int>()
 
     let nowDate = Calendar(identifier: .gregorian)
     let items = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
@@ -26,16 +28,16 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     private func getCellData(indexPath: IndexPath) -> (text: String, detail: Int) {
         
         let year = indexPath.section + firstYear
+        //表示方法について、1~9月と、10~12月に場合分けする
         let month = (indexPath.row > 8) ? "\(indexPath.row + 1)" : "0" + "\(indexPath.row + 1)"
         let yearMonth = "\(year)/\(month)"
         
         dateFormatter.dateFormat = "yyyy/MM"
         if let date = dateFormatter.date(from: yearMonth) {
-            let totalPitches: Int = realm.objects(RunRecord.self)
+            let totalPitches: Int = realm.objects(PitchesRecord.self)
                 .filter("date BEGINSWITH '\(dateFormatter.string(from: date))'")
                 .sum(ofProperty: "pitches")
             
-            //  return(items[indexPath.row], String(totalPitches))
             return(items[indexPath.row], totalPitches)
         }
         return(items[indexPath.row], 0)
@@ -44,59 +46,52 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         myTableView.delegate = self
         myTableView.dataSource = self
+        sections = ["\(firstYear)年","\(firstYear + 1)年", "\(firstYear + 2)年"]
+       
     }
     override func viewWillAppear(_ animated: Bool) {
         //上限投球数の表示を更新
         let maxPitches = userDefaults.string(forKey: "myMax")
         settedMaxPitches.text = maxPitches
-        //        let maxPitches = userDefaults.integer(forKey: "myMax")
-        //        settedMaxPitches.text = String(maxPitches)
-    }
-    var openedSections = Set<Int>()
-    //sectionをタップした時の処理
-    @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
-        if let section = sender.view?.tag {
-            if openedSections.contains(section) {
-                //sectionを閉じる処理
-                openedSections.remove(section)
-            } else {
-                //sectionを開く処理
-                openedSections.insert(section)
-            }
-            //タップ時のアニメーションの実行
-            myTableView.reloadSections(IndexSet(integer: section), with: .fade)
+    
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.dateFormat = "yyyy"
+        let now = dateFormatter.string(from: Date())
+        
+        myTableView.reloadData()
+        
+        if now == "2020" {
+           let indexPath = IndexPath(row: 0, section: 0)
+            myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+            //現在が2021年なら、sectionを2021年にあわせる
+        } else if now == "2021" {
+           let indexPath = IndexPath(row: 0, section: 1)
+            myTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
         }
     }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        //タップを認識する処理
-        let view = UITableViewHeaderFooterView()
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(sectionHeaderDidTap(_:)))
-        view.addGestureRecognizer(gesture)
-        //タップしたsectionと開くsectionをイコールにする
-        view.tag = section
-        return view
-    }
+   
     func numberOfSections(in tableView: UITableView) -> Int {
-        
-        let sections = ["\(firstYear)年","\(firstYear + 1)年", "\(firstYear + 2)年"]
-       // return self.sections.count
-        return sections.count
+
+        return self.sections.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-         let sections = ["\(firstYear)年","\(firstYear + 1)年", "\(firstYear + 2)年"]
-       // return self.sections[section]
-        return sections[section]
+       
+        return self.sections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if openedSections.contains(section) {
+    
             return items.count
-        } else {
-            return 0
-        }
+    }
+    //ヘッダを一覧表示(インデックスバーへ表示)
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        //インデックスバーをクリックしたとき、色が変わる
+        //self.myTableView.sectionIndexTrackingBackgroundColor = .red
+        return self.sections
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         //背景色はclearに設定する
+        
         cell.backgroundColor = .clear
         let (text, detail) = getCellData(indexPath: indexPath)
         cell.textLabel?.text = text
@@ -110,4 +105,28 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
 }
-
+ //sectionをタップした時の処理
+    //sectionの開閉は、見づらいので却下
+//    @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
+//        if let section = sender.view?.tag {
+//
+//            if openedSections.contains(section) {
+//                //sectionを閉じる処理
+//                openedSections.remove(section)
+//            } else {
+//                //sectionを開く処理
+//                openedSections.insert(section)
+//            }
+//            //タップ時のアニメーションの実行
+//            myTableView.reloadSections(IndexSet(integer: section), with: .fade)
+//        }
+//    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        //タップを認識する処理
+//        let view = UITableViewHeaderFooterView()
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(sectionHeaderDidTap(_:)))
+//        view.addGestureRecognizer(gesture)
+//        //タップしたsectionと開くsectionをイコールにする
+//        view.tag = section
+//        return view
+//    }
