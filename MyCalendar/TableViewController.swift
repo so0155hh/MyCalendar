@@ -20,8 +20,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let firstYear = 2020
     //メンバ変数を定義するとき、他の変数を使って初期化はできない。
     var sections: [String] = []
-   // var openedSections = Set<Int>()
-
+    // var openedSections = Set<Int>()
+    
     let nowDate = Calendar(identifier: .gregorian)
     let items = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
     
@@ -47,40 +47,35 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         myTableView.delegate = self
         myTableView.dataSource = self
         sections = ["\(firstYear)年","\(firstYear + 1)年", "\(firstYear + 2)年"]
-       
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         //上限投球数の表示を更新
         let maxPitches = userDefaults.string(forKey: "myMax")
         settedMaxPitches.text = maxPitches
-    
+        
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.dateFormat = "yyyy"
-        let nowYear = dateFormatter.string(from: Date())
+        let nowYear = Int(dateFormatter.string(from: Date()))
+        
         let nowSection = 0
         
         myTableView.reloadData()
         
-        if nowYear == "2020" {
-           let indexPath = IndexPath(row: 0, section: nowSection)
-            myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
-            //現在が2021年なら、sectionを2021年にあわせる
-        } else if nowYear == "2021" {
-           let indexPath = IndexPath(row: 0, section: nowSection + 1)
-            myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
-        }
+        let indexPath = IndexPath(row: 0, section: nowSection + nowYear! - 2020)
+        myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-
+        
         return self.sections.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-       
+        
         return self.sections[section]
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
-            return items.count
+        
+        return items.count
     }
     //ヘッダを一覧表示(インデックスバーへ表示)
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
@@ -99,14 +94,14 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let maxPitches = userDefaults.integer(forKey: "myMax")
         let settedAge = userDefaults.integer(forKey: "myAge")
         //6歳未満は背景色の変更なし
-       if detail >= maxPitches, settedAge >= 6 {
+        if detail >= maxPitches, settedAge >= 6 {
             cell.backgroundColor = .red
-       }
+        }
         return cell
     }
 }
- //sectionをタップした時の処理
-    //sectionの開閉は、見づらいので却下
+//sectionをタップした時の処理
+//sectionの開閉は、見づらいので却下
 //    @objc func sectionHeaderDidTap(_ sender:UIGestureRecognizer) {
 //        if let section = sender.view?.tag {
 //
