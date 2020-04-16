@@ -56,20 +56,20 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.dateFormat = "yyyy"
-        let now = dateFormatter.string(from: Date())
+        let nowYear = dateFormatter.string(from: Date())
+        let nowSection = 0
         
         myTableView.reloadData()
         
-        if now == "2020" {
-           let indexPath = IndexPath(row: 0, section: 0)
+        if nowYear == "2020" {
+           let indexPath = IndexPath(row: 0, section: nowSection)
             myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
             //現在が2021年なら、sectionを2021年にあわせる
-        } else if now == "2021" {
-           let indexPath = IndexPath(row: 0, section: 1)
-            myTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        } else if nowYear == "2021" {
+           let indexPath = IndexPath(row: 0, section: nowSection + 1)
+            myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
         }
     }
-   
     func numberOfSections(in tableView: UITableView) -> Int {
 
         return self.sections.count
