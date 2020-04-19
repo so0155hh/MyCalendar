@@ -14,8 +14,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var settedMaxPitches: UILabel!
     
-    let dateFormatter = DateFormatter()
-    let dateFormatterMonth = DateFormatter()
+    let formatter = DateFormatter()
+    let formatterMonth = DateFormatter()
     let userDefaults = UserDefaults.standard
     let realm = try! Realm()
     let firstYear = 2020
@@ -32,11 +32,11 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //表示方法について、1~9月と、10~12月に場合分けする
         let month = (indexPath.row > 8) ? "\(indexPath.row + 1)" : "0" + "\(indexPath.row + 1)"
         let yearMonth = "\(year)/\(month)"
-        
-        dateFormatter.dateFormat = "yyyy/MM"
-        if let date = dateFormatter.date(from: yearMonth) {
+        //月ごとの合計投球数の算出
+        formatter.dateFormat = "yyyy/MM"
+        if let date = formatter.date(from: yearMonth) {
             let totalPitches: Int = realm.objects(PitchesRecord.self)
-                .filter("date BEGINSWITH '\(dateFormatter.string(from: date))'")
+                .filter("date BEGINSWITH '\(formatter.string(from: date))'")
                 .sum(ofProperty: "pitches")
             
             return(items[indexPath.row], totalPitches)
@@ -48,26 +48,25 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         myTableView.delegate = self
         myTableView.dataSource = self
         sections = ["\(firstYear)年","\(firstYear + 1)年", "\(firstYear + 2)年"]
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         //上限投球数の表示を更新
         let maxPitches = userDefaults.string(forKey: "myMax")
         settedMaxPitches.text = maxPitches
         //年の取得
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.dateFormat = "yyyy"
-        let nowYear = Int(dateFormatter.string(from: Date()))
+        formatter.locale = Locale(identifier: "ja_JP")
+        formatter.dateFormat = "yyyy"
+        let nowYear = Int(formatter.string(from: Date()))
             //月の取得
-        dateFormatterMonth.locale = Locale(identifier: "ja_JP")
-        dateFormatterMonth.dateFormat = "MM"
-        let nowMonth = Int(dateFormatterMonth.string(from: Date()))
+        formatterMonth.locale = Locale(identifier: "ja_JP")
+        formatterMonth.dateFormat = "MM"
+        let nowMonth = Int(formatterMonth.string(from: Date()))
        
         let nowSection = 0
         let nowRow = 0
         
         myTableView.reloadData()
-        
+        //tableViewの表示を現在の年月にする
         let indexPath = IndexPath(row: nowRow + nowMonth! - 1, section: nowSection + nowYear! - 2020)
         myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }

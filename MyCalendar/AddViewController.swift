@@ -30,7 +30,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         formatter.locale = Locale(identifier: "ja_JP")
       todayLabel.text = formatter.string(from: date)
         
-        //入力した投球数の保存
+        //保存した投球数の表示
         let myPitches = userDefaults.string(forKey: "myPitches")
         pitchesRecordText.text = myPitches
         
@@ -54,6 +54,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         self.dismiss(animated: true, completion: nil)
         print("データ書き込み中")
         }
+        //投球数の保存
         userDefaults.set(pitchesRecordText.text!, forKey: "myPitches")
         userDefaults.synchronize()
     }

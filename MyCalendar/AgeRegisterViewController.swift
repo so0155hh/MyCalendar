@@ -57,7 +57,6 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
         userDefaults.set(ageLabel.text!, forKey: "myAge")
         userDefaults.synchronize()
     }
-    
     @IBAction func cancelReturn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
