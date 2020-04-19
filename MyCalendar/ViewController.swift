@@ -16,6 +16,9 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
     var notificationToken: NotificationToken? = nil
     let tmpDate = Calendar(identifier: .gregorian)
     let userDefaults = UserDefaults.standard
+    var continuousRecord: Int = 0
+    var pitchedRecord = ""
+    
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var monthTotalText: UILabel!
     
@@ -25,7 +28,8 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         self.calendar.dataSource = self
         self.calendar.delegate = self
         //今日の印(赤丸)を消す
-         calendar.today = nil
+         //calendar.today = nil
+       
         let maxPitches = userDefaults.string(forKey: "myMax")
         monthTotalText.text = maxPitches
         
@@ -64,14 +68,14 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
            }
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
         var myRecord = ""
-        let tmpDate = Calendar(identifier: .gregorian)
+       // let tmpDate = Calendar(identifier: .gregorian)
         let year = tmpDate.component(.year, from: date)
         let month = tmpDate.component(.month, from: date)
         let day = tmpDate.component(.day, from: date)
         let m = String(format: "%02d", month)
         let d = String(format: "%02d", day)
         let da = "\(year)/\(m)/\(d)"
-        //年月日が一致したらサブタイトルに走った距離を表示
+        //年月日が一致したらサブタイトルに投球数を表示
         let realm = try! Realm()
         var result = realm.objects(PitchesRecord.self)
         result = result.filter("date = '\(da)'")
@@ -82,6 +86,41 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         }
         return "○"
     }
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        
+        let nowDate = Calendar(identifier: .gregorian)
+        let year = nowDate.component(.year, from: date)
+        let month = nowDate.component(.month, from: date)
+        let day = nowDate.component(.day, from: date)
+        let m = String(format: "%02d", month)
+        let d = String(format: "%02d", day)
+        let da = "\(year)/\(m)/\(d)"
+      
+        //年月日が一致したらサブタイトルに投球数を表示
+        let realm = try! Realm()
+        var result = realm.objects(PitchesRecord.self)
+        
+        result = result.filter("date = '\(da)'")
+        
+        if let record = result.last {
+            continuousRecord = record.pitches
+            //投球を記録した日付を取り出す
+            pitchedRecord = record.date
+            
+//            let formatter = DateFormatter()
+//            formatter.timeStyle = .none
+//            formatter.dateStyle = .short
+//            formatter.locale = Locale(identifier: "ja_JP")
+        //    let lastDate = formatter.date(from: pitchedRecord)
+          //  let yesterday = nowDate.date(byAdding: .day,value: -1, to: nowDate.startOfDay(for: date))
+            
+            if continuousRecord > 0 {
+                
+        return UIColor.systemYellow
+            }
+    }
+        return nil
+    }
     @IBAction func backToCalendar(segue: UIStoryboardSegue) {
         let maxPitches = userDefaults.string(forKey: "myMax")
         monthTotalText.text = maxPitches
@@ -90,7 +129,7 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
 //        if monthPosition == .previous || monthPosition == .next {
 //            calendar.setCurrentPage(date, animated: true)
 //        }
-  //  }
+    //  }
 }
 class PitchesRecord: Object {
     @objc dynamic var date: String = ""

@@ -56,7 +56,8 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="fakedSelectedDay">
                                         <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsSelection" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
                                         <color key="value" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>

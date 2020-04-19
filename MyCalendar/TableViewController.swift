@@ -15,6 +15,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var settedMaxPitches: UILabel!
     
     let dateFormatter = DateFormatter()
+    let dateFormatterMonth = DateFormatter()
     let userDefaults = UserDefaults.standard
     let realm = try! Realm()
     let firstYear = 2020
@@ -53,16 +54,21 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //上限投球数の表示を更新
         let maxPitches = userDefaults.string(forKey: "myMax")
         settedMaxPitches.text = maxPitches
-        
+        //年の取得
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.dateFormat = "yyyy"
         let nowYear = Int(dateFormatter.string(from: Date()))
-        
+            //月の取得
+        dateFormatterMonth.locale = Locale(identifier: "ja_JP")
+        dateFormatterMonth.dateFormat = "MM"
+        let nowMonth = Int(dateFormatterMonth.string(from: Date()))
+       
         let nowSection = 0
+        let nowRow = 0
         
         myTableView.reloadData()
         
-        let indexPath = IndexPath(row: 0, section: nowSection + nowYear! - 2020)
+        let indexPath = IndexPath(row: nowRow + nowMonth! - 1, section: nowSection + nowYear! - 2020)
         myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
