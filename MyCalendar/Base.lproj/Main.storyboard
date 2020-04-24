@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-zB-VBN" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="44" width="375" height="503"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="503.5"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="firstWeekday">
                                         <integer key="value" value="1"/>
@@ -67,13 +67,13 @@
                                 </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="月間投球数上限(球)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTU-Ye-YB4">
-                                <rect key="frame" x="20" y="577" width="175" height="21"/>
+                                <rect key="frame" x="20" y="577.5" width="175" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkP-qj-iCD">
-                                <rect key="frame" x="255" y="577" width="25" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未設定" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mkP-qj-iCD">
+                                <rect key="frame" x="241.5" y="577.5" width="52" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -159,9 +159,6 @@
                                 <rect key="frame" x="20" y="218" width="335" height="44"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="投球数を確認する"/>
-                                <connections>
-                                    <action selector="resultButton:" destination="pfd-Jl-vyn" eventType="touchUpInside" id="YYi-bl-LdR"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あなたの月間投球数は" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f60-sd-4Kv">
                                 <rect key="frame" x="20" y="297" width="335" height="24"/>
@@ -229,13 +226,14 @@
                         <viewLayoutGuide key="safeArea" id="V4w-CH-W26"/>
                     </view>
                     <navigationItem key="navigationItem" title="上限設定" id="RQr-xA-6R6">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="RPU-4N-rjP">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="RPU-4N-rjP">
                             <connections>
                                 <action selector="cancelReturn:" destination="pfd-Jl-vyn" id="fCY-fK-Q1C"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="8DK-TX-BjF">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="8DK-TX-BjF">
                             <connections>
+                                <action selector="calculateBtn:" destination="pfd-Jl-vyn" id="6Gq-DI-JKj"/>
                                 <segue destination="WGn-gh-SNl" kind="unwind" unwindAction="backToCalendarWithSegue:" id="mFN-Ab-awc"/>
                             </connections>
                         </barButtonItem>

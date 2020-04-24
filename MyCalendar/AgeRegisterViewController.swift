@@ -16,44 +16,10 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var firstLabel: UILabel!
     @IBOutlet weak var secondLabel: UILabel!
     @IBOutlet weak var maxPitches: UILabel!
-   
+    
     let userDefaults = UserDefaults.standard
     
-    @IBAction func resultButton(_ sender: Any) {
-        //年齢に応じて投球数の上限を表示
-        if let ageInt = Int(ageLabel.text!) {
-            if ageInt < 6 { //6歳未満の場合
-                firstLabel.isHidden = true
-                secondLabel.isHidden = true
-                alertLabel.isHidden = false
-                maxPitches.isHidden = true
-                alertLabel.text = "まずは野球を楽しみましょう!"
-                
-            } else if ageInt >= 6, ageInt < 13 {//小学生の場合
-                firstLabel.isHidden = false
-                secondLabel.isHidden = false
-                maxPitches.text = String(800)
-                maxPitches.isHidden = false
-                alertLabel.text = "月に800球以上投げないようにしましょう。"
-                
-            } else if ageInt >= 13, ageInt < 16 {//中学生の場合
-                firstLabel.isHidden = false
-                secondLabel.isHidden = false
-                maxPitches.text = String(1400)
-                maxPitches.isHidden = false
-                alertLabel.text = "月に1400球以上投げないようにしましょう。"
-                
-            } else if ageInt >= 16 {//高校生〜大人の場合
-                firstLabel.isHidden = false
-                secondLabel.isHidden = false
-                maxPitches.text = String(2000)
-                maxPitches.isHidden = false
-                alertLabel.text = "月に2000球以上投げないようにしましょう。"
-            }
-        }
-        //上限投球数を保存
-        userDefaults.set(Int(maxPitches.text!), forKey: "myMax")
-        //年齢を保存
+    @IBAction func calculateBtn(_ sender: Any) {
         userDefaults.set(ageLabel.text!, forKey: "myAge")
         userDefaults.synchronize()
     }
@@ -62,16 +28,20 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         ageLabel.delegate = self
+        
+        self.doneButton.isEnabled = false
+        
         firstLabel.isHidden = true
-        maxPitches.isHidden = true
+        // maxPitches.isHidden = true
         secondLabel.isHidden = true
         
         //前回登録した年齢データの取り出し
         let myAge = userDefaults.string(forKey: "myAge")
         ageLabel.text = myAge
         
-        //NumberPadに"Done"ボタンを表示
+        //   NumberPadに"Done"ボタンを表示
         let toolBar = UIToolbar(frame: CGRect(x:0, y:0, width: 320, height: 40))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
@@ -86,5 +56,50 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
     }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        //年齢に応じて投球数の上限を表示
+        if let ageInt = Int(ageLabel.text!) {
+            if ageInt < 6 { //6歳未満の場合
+                firstLabel.isHidden = true
+                secondLabel.isHidden = true
+                alertLabel.isHidden = false
+                //  maxPitches.isHidden = true
+                maxPitches.text = ""
+                alertLabel.text = "まずは野球を楽しみましょう!"
+                
+            } else if ageInt >= 6, ageInt < 13 {//小学生の場合
+                firstLabel.isHidden = false
+                secondLabel.isHidden = false
+                maxPitches.text = String(800)
+                //   maxPitches.isHidden = false
+                alertLabel.text = "月に800球以上投げないようにしましょう。"
+                
+            } else if ageInt >= 13, ageInt < 16 {//中学生の場合
+                firstLabel.isHidden = false
+                secondLabel.isHidden = false
+                maxPitches.text = String(1400)
+                // maxPitches.isHidden = false
+                alertLabel.text = "月に1400球以上投げないようにしましょう。"
+                
+            } else if ageInt >= 16 {//高校生〜大人の場合
+                firstLabel.isHidden = false
+                secondLabel.isHidden = false
+                maxPitches.text = String(2000)
+                //  maxPitches.isHidden = false
+                alertLabel.text = "月に2000球以上投げないようにしましょう。"
+            }
+        }
+        // 上限投球数を保存
+        userDefaults.set(Int(maxPitches.text!), forKey: "myMax")
+        //年齢を保存
+        userDefaults.set(ageLabel.text!, forKey: "myAge")
+        userDefaults.synchronize()
+    }
+    //年齢を入力しないとdoneButtonを押せないようにする
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { _ in self.doneButton.isEnabled = self.maxPitches.text == "800" || self.maxPitches.text == "1400" || self.maxPitches.text == "2000"
+        }
+        return true
+    }
 }
-
