@@ -98,7 +98,7 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
     }
     //年齢を入力しないとdoneButtonを押せないようにする
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { _ in self.doneButton.isEnabled = self.maxPitches.text == "800" || self.maxPitches.text == "1400" || self.maxPitches.text == "2000"
+        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { _ in self.doneButton.isEnabled = self.ageLabel.text != ""
         }
         return true
     }
