@@ -8,20 +8,26 @@
 
 import UIKit
 
-class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
+class AgeRegisterViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var ageLabel: UITextField!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var alertLabel: UILabel!
     @IBOutlet weak var firstLabel: UILabel!
     @IBOutlet weak var secondLabel: UILabel!
     @IBOutlet weak var maxPitches: UILabel!
+    @IBOutlet weak var ageLabel: UITextField!
+    @IBOutlet weak var sampleLabel: UILabel!
     
     let userDefaults = UserDefaults.standard
     
-    @IBAction func calculateBtn(_ sender: Any) {
-        userDefaults.set(ageLabel.text!, forKey: "myAge")
-        userDefaults.synchronize()
+    var age: Int? = 0 {
+        didSet {
+            if age! > 0 {
+                self.doneButton.isEnabled  = true
+            } else {
+                self.doneButton.isEnabled  = false
+            }
+        }
     }
     @IBAction func cancelReturn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -31,15 +37,14 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
         
         ageLabel.delegate = self
         
-        self.doneButton.isEnabled = false
-        
         firstLabel.isHidden = true
         // maxPitches.isHidden = true
         secondLabel.isHidden = true
-        
         //前回登録した年齢データの取り出し
         let myAge = userDefaults.string(forKey: "myAge")
         ageLabel.text = myAge
+        
+        self.doneButton.isEnabled  = false
         
         //   NumberPadに"Done"ボタンを表示
         let toolBar = UIToolbar(frame: CGRect(x:0, y:0, width: 320, height: 40))
@@ -50,7 +55,7 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
         self.ageLabel.keyboardType = UIKeyboardType.numberPad
     }
     @objc func doneButtonTapped(sender: UIButton) {
-        self.view.endEditing(true)
+         self.view.endEditing(true)
     }
     //textFieldタップ時に全選択にする
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -60,34 +65,36 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
         
         //年齢に応じて投球数の上限を表示
         if let ageInt = Int(ageLabel.text!) {
+            self.age = ageInt
             if ageInt < 6 { //6歳未満の場合
                 firstLabel.isHidden = true
                 secondLabel.isHidden = true
                 alertLabel.isHidden = false
                 //  maxPitches.isHidden = true
-                maxPitches.text = ""
+                maxPitches.text = " "
                 alertLabel.text = "まずは野球を楽しみましょう!"
-                
+
             } else if ageInt >= 6, ageInt < 13 {//小学生の場合
                 firstLabel.isHidden = false
                 secondLabel.isHidden = false
-                maxPitches.text = String(800)
+               maxPitches.text = String(800)
                 //   maxPitches.isHidden = false
                 alertLabel.text = "月に800球以上投げないようにしましょう。"
-                
+
             } else if ageInt >= 13, ageInt < 16 {//中学生の場合
                 firstLabel.isHidden = false
                 secondLabel.isHidden = false
                 maxPitches.text = String(1400)
                 // maxPitches.isHidden = false
                 alertLabel.text = "月に1400球以上投げないようにしましょう。"
-                
+
             } else if ageInt >= 16 {//高校生〜大人の場合
                 firstLabel.isHidden = false
                 secondLabel.isHidden = false
                 maxPitches.text = String(2000)
                 //  maxPitches.isHidden = false
                 alertLabel.text = "月に2000球以上投げないようにしましょう。"
+                
             }
         }
         // 上限投球数を保存
@@ -97,9 +104,10 @@ class AgeRegisterViewController: UIViewController,UITextFieldDelegate {
         userDefaults.synchronize()
     }
     //年齢を入力しないとdoneButtonを押せないようにする
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { _ in self.doneButton.isEnabled = self.ageLabel.text != ""
-        }
-        return true
-    }
+   // func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    //    Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { _ in self.doneButton.isEnabled = self.ageLabel.text != ""
+        
+     //   return true
+    //}
+
 }

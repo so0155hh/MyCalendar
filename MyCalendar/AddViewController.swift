@@ -12,43 +12,58 @@ import RealmSwift
 let realm = try! Realm()
 
 class AddViewController: UIViewController, UITextFieldDelegate {
+  
     
     @IBOutlet weak var todayLabel: UILabel!
     @IBOutlet weak var pitchesRecordText: UITextField!
     @IBOutlet weak var saveBtn: UIBarButtonItem!
+    @IBOutlet weak var dateText: UITextField!
     
+    var datePicker: UIDatePicker = UIDatePicker()
     let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let date = Date()
-        pitchesRecordText.delegate = self
-        //本日の日付を表示
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .short
-        formatter.locale = Locale(identifier: "ja_JP")
-      todayLabel.text = formatter.string(from: date)
+        //let date = Date()
         
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "ja_JP")
+        dateText.inputView = datePicker
+        pitchesRecordText.delegate = self
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 35))
+        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        toolBar.setItems([spacelItem, doneItem], animated: true)
+        
+        dateText.inputView = datePicker
+        dateText.inputAccessoryView = toolBar
         //保存した投球数の表示
         let myPitches = userDefaults.string(forKey: "myPitches")
         pitchesRecordText.text = myPitches
         
         //入力をnumberPadにする
-        let toolBar = UIToolbar(frame: CGRect(x:0, y:0, width: 320, height: 40))
+        let pitchesToolBar = UIToolbar(frame: CGRect(x:0, y:0, width: 320, height: 40))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
-        toolBar.items = [space, doneButton]
-        pitchesRecordText.inputAccessoryView = toolBar
+        pitchesToolBar.items = [space, doneButton]
+        pitchesRecordText.inputAccessoryView = pitchesToolBar
         self.pitchesRecordText.keyboardType = UIKeyboardType.numberPad
     }
     @objc func doneButtonTapped (sender: UIButton) {
         self.view.endEditing(true)
     }
+    @objc func done() {
+        dateText.endEditing(true)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        dateText.text = formatter.string(from: datePicker.date)
+    }
+    
     @IBAction func saveBtn(_ sender: Any) {
         if let intPitches = Int(pitchesRecordText.text!) {
         try! realm.write {
-            let Records = [PitchesRecord(value: ["date": todayLabel.text!, "pitches": intPitches])]
+            let Records = [PitchesRecord(value: ["date": dateText.text!, "pitches": intPitches])]
             realm.add(Records, update: .all)
         }
         self.dismiss(animated: true, completion: nil)

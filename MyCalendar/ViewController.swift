@@ -29,10 +29,17 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         self.calendar.delegate = self
         //今日の印(赤丸)を消す処理
         //calendar.today = nil
-        
-        let maxPitches = userDefaults.string(forKey: "myMax")
-        monthTotalText.text = maxPitches
-        
+       
+        if let maxPitches = userDefaults.string(forKey: "myMax") {
+            if maxPitches == " " {
+                monthTotalText.text = ""
+                
+            } else if monthTotalText.text != "" {
+                monthTotalText.text = maxPitches
+            } else {
+                monthTotalText.text = "未設定"
+            }
+        }
         let realm = try! Realm()
        // データの更新を通知
         notificationToken = realm.observe { Notification, realm in
