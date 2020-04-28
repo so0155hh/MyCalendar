@@ -234,7 +234,6 @@
                         <outlet property="doneButton" destination="8DK-TX-BjF" id="sI4-Ve-J6V"/>
                         <outlet property="firstLabel" destination="f60-sd-4Kv" id="dYs-xG-jj0"/>
                         <outlet property="maxPitches" destination="EPI-b3-g92" id="6Rx-Zw-eMC"/>
-                        <outlet property="sampleLabel" destination="1vs-5j-sOF" id="ZR2-YJ-le3"/>
                         <outlet property="secondLabel" destination="JeL-1U-Zif" id="0qF-KP-Edt"/>
                     </connections>
                 </viewController>
