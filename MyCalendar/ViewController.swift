@@ -30,22 +30,34 @@ class ViewController: UIViewController,FSCalendarDelegate,FSCalendarDataSource,F
         //今日の印(赤丸)を消す処理
         //calendar.today = nil
        
-       if let maxPitches = userDefaults.string(forKey: "myMax") {
-                   if maxPitches == " " {
-                       monthTotalText.text = ""
-                   } else if monthTotalText.text != "" {
-                       monthTotalText.text = maxPitches
-                   } else {
-                       monthTotalText.text = "未設定"
-                   }
-               }
-       // monthTotalText.text = userDefaults.string(forKey: "myMax")
-       // monthTotalText.text = userDefaults.string(forKey: "myMaxString")
+        let maxPitches: Int = userDefaults.integer(forKey: "myMax")
+//                   if monthTotalText.text != "" {
+//                       monthTotalText.text = String(maxPitches)
+//                   } else {
+//                       monthTotalText.text = "未設定"
+//                   }
+               
+        if maxPitches > 1 {
+             monthTotalText.text = String(maxPitches)
+        } else {
+            monthTotalText.text = "未設定"
+        }
+       
         let realm = try! Realm()
        // データの更新を通知
         notificationToken = realm.observe { Notification, realm in
             self.calendar.reloadData()
         }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+//        let maxPitches = userDefaults.string(forKey: "myMax") ?? "未設定"
+//        monthTotalText.text = maxPitches
+         let maxPitches: Int = userDefaults.integer(forKey: "myMax")
+        if maxPitches > 1 {
+                    monthTotalText.text = String(maxPitches)
+              } else {
+                   monthTotalText.text = "未設定"
+    }
     }
     //祝日の設定
     func judgeHoliday (_ date: Date) -> Bool {

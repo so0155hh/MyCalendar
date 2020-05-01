@@ -224,12 +224,12 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="8DK-TX-BjF">
                             <connections>
-                                <segue destination="WGn-gh-SNl" kind="unwind" unwindAction="backToCalendarWithSegue:" id="mFN-Ab-awc"/>
+                                <segue destination="WGn-gh-SNl" kind="unwind" unwindAction="backToCalendarWithSegue:" id="GjA-B3-mvc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ageLabel" destination="xz4-iN-0BU" id="N3f-iG-vnr"/>
+                        <outlet property="ageField" destination="xz4-iN-0BU" id="AUW-6J-ugz"/>
                         <outlet property="alertLabel" destination="hgo-3L-OfS" id="xIv-Fh-qtM"/>
                         <outlet property="doneButton" destination="8DK-TX-BjF" id="sI4-Ve-J6V"/>
                         <outlet property="firstLabel" destination="f60-sd-4Kv" id="dYs-xG-jj0"/>

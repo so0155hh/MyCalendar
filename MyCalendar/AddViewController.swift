@@ -13,8 +13,6 @@ let realm = try! Realm()
 
 class AddViewController: UIViewController, UITextFieldDelegate {
   
-    
-    @IBOutlet weak var todayLabel: UILabel!
     @IBOutlet weak var pitchesRecordText: UITextField!
     @IBOutlet weak var saveBtn: UIBarButtonItem!
     @IBOutlet weak var dateText: UITextField!
@@ -24,7 +22,6 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let date = Date()
         
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ja_JP")
